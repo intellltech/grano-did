@@ -14,7 +14,6 @@
     - [Delete](#delete)
   - [Security Considerations](#security-considerations)
   - [Privacy Considerations](#privacy-considerations)
-  - [Reference Implementations](#reference-implementations)
   - [References](#references)
 
 
@@ -53,7 +52,7 @@ interaction with the grano network is required. The registration is implicit as 
 force an grano address, i.e., guessing the private key for a given public key on the Elliptic Curve
 (secp256k1). The holder of the private key is the entity identified by the DID.
 
-The default DID document for an `did:grn<grano address>`, e.g.
+The default DID document for an `did:grn:<grano address>`, e.g.
 `did:grn:grano1fp7rrdjn4rxjqt2x23kpju3t9rd5hdkf2f0yyq` with no transactions to the grano registry looks like this:
 
 ```json
@@ -107,7 +106,7 @@ The grano contract publishes two types of events for each identifier.
 If a change has ever been made for the grano address of an identifier the block number is stored in the
 `changed` mapping of the contract.
 
-The latest event can be efficiently looked up by checking for one of the 3 above events at that exact block.
+The latest event can be efficiently looked up by checking for one of the 2 above events at that exact block.
 
 The grano contract event contains a `previousChange` value which contains the block number of the previous change (if any).
 
@@ -127,22 +126,26 @@ When the controller address of a `did:grn` is changed, a `DIDControllerChanged` 
 
 ```js
 {
-	type: 'wasm',
-	attributes: [{
-		key: '_contract_address',
-		value: 'grano1rrrc5dtyy632tm0az2gqem96943er69vd2twra56xe7gr6y52wfqw7qqm8'
-	}, {
-		key: 'identifier',
-		value: 'grano14fsulwpdj9wmjchsjzuze0k37qvw7n7a7l207u'
-	}, {
-		key: 'controller',
-		value: 'grano1y0k76dnteklegupzjj0yur6pj0wu9e0z35jafv'
-	}, {
-		key: 'previousChange',
-		value: '0'
-	}]
+  type: 'wasm',
+  attributes: [
+    {
+      key: '_contract_address',
+      value: 'grano1rrrc5dtyy632tm0az2gqem96943er69vd2twra56xe7gr6y52wfqw7qqm8'
+    },
+    {
+      key: 'identifier',
+      value: 'grano14fsulwpdj9wmjchsjzuze0k37qvw7n7a7l207u'
+    },
+    {
+      key: 'controller',
+      value: 'grano1y0k76dnteklegupzjj0yur6pj0wu9e0z35jafv'
+    },
+    {
+      key: 'previousChange',
+      value: '0'
+    }
+  ]
 }
-
 ```
 
 
@@ -150,37 +153,45 @@ The event data MUST be used to update the `#controller` entry in the `verificati
 When resolving DIDs with publicKey identifiers, if the controller (`owner`) address is different from the corresponding
 address of the publicKey, then the `#controllerKey` entry in the `verificationMethod` array MUST be omitted.
 
-##### Non-Grano Attributes (`DIDAttributeChanged`)
+##### Attribute changes (`DIDAttributeChanged`)
 
-Non-Grano keys, service endpoints etc. can be added using attributes. Attributes exist on the blockchain as
+keys, service endpoints etc. can be added using attributes. Attributes exist on the blockchain as
 contract events of type `DIDAttributeChanged` and also latest state can be queried from the grano contract too.
 
 
 ```js
 {
-	type: 'wasm',
-	attributes: [{
-		key: '_contract_address',
-		value: 'grano1napx452awu78vndg7t6nk26zhdct40wz7ha2r5t6a8hlv4a0lcmsnapnqc'
-	}, {
-		key: 'identifier',
-		value: 'grano14fsulwpdj9wmjchsjzuze0k37qvw7n7a7l207u'
-	}, {
-		key: 'name',
-		value: 'service.id'
-	}, {
-		key: 'value',
-		value: '#github'
-	}, {
-		key: 'validTo',
-		value: '1667825742.818354895'
-	}, {
-		key: 'previousChange',
-		value: '0'
-	}, {
-		key: 'from',
-		value: 'grano14fsulwpdj9wmjchsjzuze0k37qvw7n7a7l207u'
-	}]
+  type: 'wasm',
+  attributes: [
+    {
+      key: '_contract_address',
+      value: 'grano1napx452awu78vndg7t6nk26zhdct40wz7ha2r5t6a8hlv4a0lcmsnapnqc'
+    },
+    {
+      key: 'identifier',
+      value: 'grano14fsulwpdj9wmjchsjzuze0k37qvw7n7a7l207u'
+    },
+    {
+      key: 'name',
+      value: 'service'
+    },
+    {
+      key: 'value',
+      value: '{ "id": "#github", "type": "github", "serviceEndpoint": "github.com/EG-easy" }'
+    },
+    {
+      key: 'validTo',
+      value: '1667825742.818354895'
+    },
+    {
+      key: 'previousChange',
+      value: '0'
+    },
+    {
+      key: 'from',
+      value: 'grano14fsulwpdj9wmjchsjzuze0k37qvw7n7a7l207u'
+    }
+  ]
 }
 ```
 
@@ -194,14 +205,12 @@ misuse for storing personal user information on-chain.
 
 ### Update
 
-The DID Document may be updated by invoking the relevant smart contract functions as defined by the grano standard.
-This includes changes to the account owner, adding additional attributes.
-description in the [contract documentation](./contract-spec.md).
+The DID Document will be updated by invoking the relevant smart contract functions as defined in the [contract documentation](https://github.com/EG-easy/grano-did-contract#msg-type). This includes changes to the account owner, adding attributes, and revoking attributes.
 
 These functions will trigger the respective CosmWasm events which are used to build the DID Document for a given
 account as described in [Enumerating Contract Events to build the DID Document](#Enumerating-Contract-Events-to-build-the-DID-Document).
 
-Some elements of the DID Document will be revoked automatically when their validity period expires. This includes the additional attributes. Please find a detailed description in the [contract documentation](./contract-spec.md). All attribute functions will trigger the respective CosmWasm events which are used to build the DID Document for a given identifier as described in [Enumerating Contract Events to build the DID Document](#Enumerating-Contract-Events-to-build-the-DID-Document).
+Some elements of the DID Document will be revoked automatically when their validity period expires.
 
 ### Delete
 
@@ -235,8 +244,10 @@ The DID resolution result for a deactivated DID has the following shape:
 
 ## Security considerations
 
-- DID versioning
-Applications MUST take precautions when using versioned DID URIs.
+### DID versioning
+
+**Applications MUST take precautions when using versioned DID URIs.**
+
 If a key is compromised and revoked then it can still be used to issue signatures on behalf of the "older" DID URI.
 The use of versioned DID URIs is only recommended in some limited situations where the timestamp of signatures can also
 be verified, where malicious signatures can be easily revoked, and where applications can afford to check for these
@@ -244,18 +255,21 @@ explicit revocations of either keys or signatures.
 Wherever versioned DIDs are in use, it SHOULD be made obvious to users that they are dealing with potentially revoked
 data.
 
+### Unsecure verifiable data registries
+
+There are a number of risks associated to the use of any unsecure Verifiable data registries:
+
+- Networks with very few validator nodes
+- Networks with unstable adoption, leading to its members abandoning the network eventually
+
+In such cases, the validity of transactions is not guaranteed, and denial-of-service attacks can take place, leading to dropped updates, or even the disappearance of the DIDs altogether.
+
+To mitigate that risk, it is recommended to store DIDs on a stable ledger with strong guarantees of continued existence.
+
 ## Privacy Considerations
 Regardless of encryption, a DID Document should not include Personally Identifiable Information (PII).
-
-## Reference Implementations
-
-The code at [grano-did-resolver](https://github.com/EG-easy/grano-did-resolver) is intended to present a reference implementation of this DID method.
 
 ## References
 
 - https://www.w3.org/TR/did-core
-- https://github.com/EG-easy/grano-did-resolver
-- https://github.com/EG-easy/grano-did-client
-- https://github.com/EG-easy/grano-did-event-exporter
 - https://github.com/EG-easy/grano-did-contract
-- https://github.com/EG-easy/grano-did-node
