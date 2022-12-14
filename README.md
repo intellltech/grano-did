@@ -17,8 +17,8 @@ Javascript Grano DID resolver source code is maintained in a separate repository
 ## Grano DID Client
 Javascript Grano DID client source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-client).
 
-## Grano DID Event Exporter
-Javascript Grano DID event exporter source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-event-exporter).
+## Grano DID App
+Javascript Grano DID app source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-app).
 
 ## Grano DID Contract
 [CosmWasm](https://github.com/CosmWasm/cosmwasm) Grano DID contract source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-contract).
