@@ -119,7 +119,7 @@ To see all changes in history for an address use the following pseudo-code:
 
 After building the history of events for an address, interpret each event to build the DID document like so:
 
-##### Controller changes (`DIDOwnerChanged`)
+##### Controller changes (`DIDControllerChanged`)
 
 When the controller address of a `did:grn` is changed, a `DIDControllerChanged` event is emitted.
 
@@ -150,7 +150,7 @@ When the controller address of a `did:grn` is changed, a `DIDControllerChanged` 
 
 
 The event data MUST be used to update the `#controller` entry in the `verificationMethod` array.
-When resolving DIDs with publicKey identifiers, if the controller (`owner`) address is different from the corresponding
+When resolving DIDs with publicKey identifiers, if the controller address is different from the corresponding
 address of the publicKey, then the `#controllerKey` entry in the `verificationMethod` array MUST be omitted.
 
 ##### Attribute changes (`DIDAttributeChanged`)
@@ -205,7 +205,7 @@ misuse for storing personal user information on-chain.
 
 ### Update
 
-The DID Document will be updated by invoking the relevant smart contract functions as defined in the [contract documentation](https://github.com/EG-easy/grano-did-contract#msg-type). This includes changes to the account owner, adding attributes, and revoking attributes.
+The DID Document will be updated by invoking the relevant smart contract functions as defined in the [contract documentation](https://github.com/EG-easy/grano-did-contract#msg-type). This includes changes to the account controller, adding attributes, and revoking attributes.
 
 These functions will trigger the respective CosmWasm events which are used to build the DID Document for a given
 account as described in [Enumerating Contract Events to build the DID Document](#Enumerating-Contract-Events-to-build-the-DID-Document).
@@ -214,9 +214,9 @@ Some elements of the DID Document will be revoked automatically when their valid
 
 ### Delete
 
-The `owner` property of the identifier MUST be set to `0x0`. Although, `0x0` is a valid grano address, this will
-indicate the account has no owner which is a common approach for invalidation, e.g., tokens. To detect if the `owner` is
-the `null` address, one MUST get the logs of the last change to the account and inspect if the `owner` was set to the
+The `controller` property of the identifier MUST be set to `0x0`. Although, `0x0` is a valid grano address, this will
+indicate the account has no controller which is a common approach for invalidation, e.g., tokens. To detect if the `controller` is
+the `null` address, one MUST get the logs of the last change to the account and inspect if the `controller` was set to the
 null address (`grano1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3z33a4`). It is impossible to make any other changes to the DID
 document after such a change, therefore all preexisting keys and services MUST be considered revoked.
 
