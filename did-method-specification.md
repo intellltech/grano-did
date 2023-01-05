@@ -272,4 +272,10 @@ Regardless of encryption, a DID Document should not include Personally Identifia
 ## References
 
 - https://www.w3.org/TR/did-core
+- https://github.com/eg-easy/grano-did
+- https://github.com/EG-easy/grano-did-client
 - https://github.com/EG-easy/grano-did-contract
+- https://github.com/EG-easy/grano-did-exporter
+- https://github.com/EG-easy/grano-did-node
+- https://github.com/EG-easy/grano-did-resolver
+
