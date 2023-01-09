@@ -267,7 +267,15 @@ In such cases, the validity of transactions is not guaranteed, and denial-of-ser
 To mitigate that risk, it is recommended to store DIDs on a stable ledger with strong guarantees of continued existence.
 
 ## Privacy Considerations
-Regardless of encryption, a DID Document should not include Personally Identifiable Information (PII).
+
+### Keeping personally-identifiable information (PII) off-chain
+Regardless of encryption, a DID Document should not include Personally Identifiable Information (PII). DID document should contain only did, public keys, and service endpoints.
+
+### Account Tracing
+It is expected that whenever a DID controller updates the DID controller with the `changeController` execute message, the new and the old controller account holder have interacted in some way. This reveals an additional relationship between two or more accounts and could be used in combination with other account relationships (for example, payment transactions) to identify an entity.
+
+### Disclosure
+All DID document and its historical data are stored in the blockchain. Users should understand that on-chain data is public and does not have limitations on its use or disclosure.
 
 ## References
 
