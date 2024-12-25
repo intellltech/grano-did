@@ -12,19 +12,19 @@ This repository contains the Grano DID method specification.
 The draft version of the Grano DID Method Specification can be found [here](did-method-specification.md).
 
 ## Grano DID Resolver
-Javascript Grano DID resolver source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-resolver).
+Javascript Grano DID resolver source code is maintained in a separate repository at [here](https://github.com/intellltech/grano-did-resolver).
 
 ## Grano DID Client
-Javascript Grano DID client source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-client).
+Javascript Grano DID client source code is maintained in a separate repository at [here](https://github.com/intellltech/grano-did-client).
 
 ## Grano DID Exporter
-Javascript Grano DID exporter source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-exporter).
+Javascript Grano DID exporter source code is maintained in a separate repository at [here](https://github.com/intellltech/grano-did-exporter).
 
 ## Grano DID Contract
-[CosmWasm](https://github.com/CosmWasm/cosmwasm) Grano DID contract source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-contract).
+[CosmWasm](https://github.com/CosmWasm/cosmwasm) Grano DID contract source code is maintained in a separate repository at [here](https://github.com/intellltech/grano-did-contract).
 
 ## Grano DID Node
-[CosmosSDK](https://github.com/cosmos/cosmos-sdk) & [Tendermint](https://github.com/tendermint/tendermint) Grano DID node source code is maintained in a separate repository at [here](https://github.com/EG-easy/grano-did-node).
+[CosmosSDK](https://github.com/cosmos/cosmos-sdk) & [Tendermint](https://github.com/tendermint/tendermint) Grano DID node source code is maintained in a separate repository at [here](https://github.com/intellltech/grano-did-node).
 
 
 ## License Information
